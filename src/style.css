@@ -28,6 +28,7 @@
   --fs-title: 2rem;
 
   --fw-regular: 400;
+  --fw-semi-bold: 500;
   --fw-bold: 700;
 }
 
@@ -54,6 +55,7 @@ input, select, button
   border: none;
   outline: none;
   border-radius: 5px;
+  font-size: var(--fs-base);
 }
 
 input[type="date"], select, button 

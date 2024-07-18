@@ -202,10 +202,21 @@ onMounted(fetchTasks);
                 <h1 class="modal_header_title">Add Task</h1>
                 <button class="modal_close_btn" @click="closeAddTaskFormModal"><img :src="CloseIcon" alt="close_icon" class="modal_close_icon"></button>
             </header>
-            <input type="text" v-model.trim="task_name" class="modal_task_input" placeholder="Input Task Name">
-            <input type="text" v-model.trim="task_description" class="modal_task_input" placeholder="Input Task Description">
-            <input type="date" v-model="task_due_date" class="modal_task_input">
-            <button type="submit" class="modal_submit_btn">Add Task</button>
+            <div class="modal_body">
+                <div class="modal_task_input_item">
+                    <label for="task_name" class="modal_task_input_item_label">Task Name</label>
+                    <input type="text" id="task_name" v-model.trim="task_name" class="modal_task_input" placeholder="Input Task Name">
+                </div>
+                <div class="modal_task_input_item">
+                    <label for="task_description" class="modal_task_input_item_label">Task Description</label>
+                    <input type="text" id="task_description" v-model.trim="task_description" class="modal_task_input" placeholder="Input Task Description">
+                </div>
+                <div class="modal_task_input_item">
+                    <label for="task_due_date" class="modal_task_input_item_label">Due Date</label>
+                    <input type="date" id="task_due_date" v-model="task_due_date" class="modal_task_input">
+                </div>
+                <button type="submit" class="modal_submit_btn">Add Task</button>
+            </div>
         </form>
     </div>
 
@@ -216,16 +227,30 @@ onMounted(fetchTasks);
                 <h1 class="modal_header_title">Update Task</h1>
                 <button class="modal_close_btn" @click="closeUpdateTaskFormModal"><img :src="CloseIcon" alt="close_icon" class="modal_close_icon"></button>
             </header>
-            <input type="text" v-model.trim="task_name" placeholder="Input Task Name" class="modal_task_input">
-            <input type="text" v-model.trim="task_description" placeholder="Input Task Description" class="modal_task_input"> 
-            <input type="date" v-model="task_due_date" class="modal_task_input">
-            <select v-model="task_status" class="modal_select_status">
-                <option value="pending" class="modal_status_select_option pending_option">Pending</option>
-                <option value="in progress" class="modal_status_select_option in_progress_option">In Progress</option>
-                <option value="completed" class="modal_status_select_option completed_option">Completed</option>
-                <option value="cancelled" class="modal_status_select_option cancelled_option">Cancelled</option>
-            </select>
-            <button type="submit" class="modal_submit_btn">Update Task</button>
+            <div class="modal_body">
+                <div class="modal_task_input_item">
+                    <label for="task_name" class="modal_task_input_item_label">Task Name</label>
+                    <input type="text" id="task_name" v-model.trim="task_name" class="modal_task_input" placeholder="Input Task Name">
+                </div>
+                <div class="modal_task_input_item">
+                    <label for="task_description" class="modal_task_input_item_label">Task Description</label>
+                    <input type="text" id="task_description" v-model.trim="task_description" class="modal_task_input" placeholder="Input Task Description">
+                </div>
+                <div class="modal_task_input_item">
+                    <label for="task_due_date" class="modal_task_input_item_label">Due Date</label>
+                    <input type="date" id="task_due_date" v-model="task_due_date" class="modal_task_input">
+                </div>
+                <div class="modal_task_input_item">
+                    <label for="task_status" class="modal_task_input_item_label">Task Status</label>
+                    <select id="task_status" v-model="task_status" class="modal_select_status">
+                        <option value="pending" class="modal_status_select_option pending_option">Pending</option>
+                        <option value="in progress" class="modal_status_select_option in_progress_option">In Progress</option>
+                        <option value="completed" class="modal_status_select_option completed_option">Completed</option>
+                        <option value="cancelled" class="modal_status_select_option cancelled_option">Cancelled</option>
+                    </select>
+                </div>
+                <button type="submit" class="modal_submit_btn">Update Task</button>
+            </div>
         </form>
     </div>
 
@@ -348,7 +373,7 @@ onMounted(fetchTasks);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-inline: 20px;
+    padding: 20px;
     z-index: 9999;
 }
 
@@ -361,7 +386,7 @@ onMounted(fetchTasks);
     flex-direction: column;
     row-gap: 20px;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     animation: slide_down 0.3s ease-in-out;
 }
 
@@ -410,49 +435,65 @@ onMounted(fetchTasks);
     transform: scale(0.8);
 }
 
-.overlay .modal_form .modal_task_input
+
+.overlay .modal_form .modal_body
+{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.overlay .modal_form .modal_body .modal_task_input_item
+{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.overlay .modal_form .modal_body .modal_task_input_item .modal_task_input_item_label
+{
+    font-weight: var(--fw-semi-bold);
+}
+
+.overlay .modal_form .modal_body .modal_task_input
 {
     padding: 15px 20px;
     width: 100%;
     background-color: rgb(var(--clr-gray));
 }
 
-.overlay .modal_form .modal_select_status 
+.overlay .modal_form .modal_body .modal_select_status 
 {
     padding: 15px 20px;
     max-width: 200px;
     background-color: rgb(var(--clr-gray));
 }
 
-.overlay .modal_form .modal_select_status .modal_status_select_option {
-    font-size: var(--fs-base);
-}
-
-.overlay .modal_form .modal_select_status .pending_option 
+.overlay .modal_form .modal_body .modal_select_status .pending_option 
 {
     background-color: rgb(var(--clr-light-orange));
 }
 
-.overlay .modal_form .modal_select_status .in_progress_option 
+.overlay .modal_form .modal_body .modal_select_status .in_progress_option 
 {
     background-color: rgb(var(--clr-light-blue));
 }
 
-.overlay .modal_form .modal_select_status .completed_option 
+.overlay .modal_form .modal_body .modal_select_status .completed_option 
 {
     background-color: rgb(var(--clr-light-green));
 }
 
-.overlay .modal_form .modal_select_status .cancelled_option 
+.overlay .modal_form .modal_body .modal_select_status .cancelled_option 
 {
     background-color: rgb(var(--clr-light-red));
 }
 
-.overlay .modal_form .modal_submit_btn
+.overlay .modal_form .modal_body .modal_submit_btn
 {
     background-color: rgb(var(--clr-green));
     color: rgb(var(--clr-light));
-    padding: 10px;
+    padding: 15px;
     font-weight: var(--fw-bold);
 }
 
