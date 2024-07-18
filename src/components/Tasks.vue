@@ -14,6 +14,7 @@ const updateTaskFormModal = ref(false);
 const tasks = ref([]);
 const task_name = ref("");
 const task_description = ref("");
+const task_due_date = ref("");
 const updated_task_id = ref(null);
 const task_status = ref("");
 
@@ -21,6 +22,7 @@ const task_status = ref("");
 const resetTaskFormModal = () => {
     task_name.value = "";
     task_description.value = "";
+    task_due_date.value = "";
 }
 
 // Add Task Data
@@ -42,8 +44,8 @@ const addTaskData = async () => {
                 task_name: task_name.value.trim(),
                 task_description: task_description.value.trim(),
                 task_status: 'pending',
-                task_due_date: new Date().toLocaleDateString("en-GB"),
-                task_due_date_updated: new Date().toISOString()
+                task_due_date: task_due_date.value,
+                task_due_date_updated: new Date().toLocaleDateString("en-GB")
         };
             const res = await axios.post(api_url, new_task);
             tasks.value.push(res.data);
@@ -66,6 +68,7 @@ const openUpdateTaskFormModal = (task_id) => {
         updated_task_id.value = task_id;
         task_name.value = task.task_name;
         task_description.value = task.task_description;
+        task_due_date.value = task.task_due_date;
         task_status.value = task.task_status.toLowerCase();
         updateTaskFormModal.value = true;
         document.body.classList.add('overflow_hidden');
@@ -86,8 +89,8 @@ const updateTaskData = async () => {
                 task_name: task_name.value.trim(),
                 task_description: task_description.value.trim(),
                 task_status: task_status.value.trim().toLowerCase(),
-                task_due_date: new Date().toLocaleDateString("en-GB"),
-                task_due_date_updated: new Date().toISOString()
+                task_due_date: task_due_date.value,
+                task_due_date_updated: new Date().toLocaleDateString("en-GB")
             }
             const res = await axios.put(`${api_url}/${updated_task_id.value}`, update_task);
 
@@ -133,6 +136,7 @@ const onDropTaskCard = (event, status) => {
         updated_task_id.value = task_id;
         task_name.value = task.task_name;
         task_description.value = task.task_description;
+        task_due_date.value = task.task_due_date;
         task_status.value = status;
         updateTaskData(status);
     }
@@ -197,6 +201,7 @@ onMounted(fetchTasks);
             </header>
             <input type="text" v-model.trim="task_name" class="modal_task_input" placeholder="Input Task Name">
             <input type="text" v-model.trim="task_description" class="modal_task_input" placeholder="Input Task Description">
+            <input type="date" v-model="task_due_date" class="modal_task_input">
             <button type="submit" class="modal_submit_btn">Add Task</button>
         </form>
     </div>
@@ -210,6 +215,7 @@ onMounted(fetchTasks);
             </header>
             <input type="text" v-model.trim="task_name" placeholder="Input Task Name" class="modal_task_input">
             <input type="text" v-model.trim="task_description" placeholder="Input Task Description" class="modal_task_input"> 
+            <input type="date" v-model="task_due_date" class="modal_task_input">
             <select v-model="task_status" class="modal_select_status">
                 <option value="pending" class="modal_status_select_option pending_option">Pending</option>
                 <option value="in progress" class="modal_status_select_option in_progress_option">In Progress</option>
@@ -415,6 +421,7 @@ onMounted(fetchTasks);
     max-width: 200px;
     background-color: rgb(var(--clr-gray));
 }
+
 .overlay .modal_form .modal_select_status .modal_status_select_option {
 
     font-size: 20px;
