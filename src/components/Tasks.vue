@@ -118,17 +118,7 @@ const deleteTaskData = async (task_id) => {
     }
 }
 
-// Fetch Tasks Data
-const fetchTasks = async () => {
-  try {
-    const res = await axios.get(api_url);
-    tasks.value = res.data;
-    sortTasks();
-  } catch (error) {
-    console.log("Error fetching tasks data", error);
-  }
-}
-
+// onDrop Task Card
 const onDropTaskCard = (event, status) => {
     const task_id = event.dataTransfer.getData('task_id');
     const task = tasks.value.find(t => t.id === task_id);
@@ -142,12 +132,25 @@ const onDropTaskCard = (event, status) => {
     }
 }
 
+// Sort Task
 const sortTasks = () => {
     tasks.value.sort((a, b) => new Date(b.task_due_date_updated) - new Date(a.task_due_date_updated));
 }   
 
+// Filter Task
 const filtered_tasks = (status) => {
     return tasks.value.filter(task => task.task_status.toLowerCase() === status.toLowerCase());
+}
+
+// Fetch Tasks Data
+const fetchTasks = async () => {
+  try {
+    const res = await axios.get(api_url);
+    tasks.value = res.data;
+    sortTasks();
+  } catch (error) {
+    console.log("Error fetching tasks data", error);
+  }
 }
 
 onMounted(fetchTasks);
