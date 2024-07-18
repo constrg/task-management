@@ -412,7 +412,6 @@ onMounted(fetchTasks);
     padding: 15px 20px;
     width: 100%;
     background-color: rgb(var(--clr-gray));
-    border-radius: 5px;
 }
 
 .overlay .modal_form .modal_select_status 
@@ -423,8 +422,7 @@ onMounted(fetchTasks);
 }
 
 .overlay .modal_form .modal_select_status .modal_status_select_option {
-
-    font-size: 20px;
+    font-size: var(--fs-base);
 }
 
 .overlay .modal_form .modal_select_status .pending_option 
