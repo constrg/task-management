@@ -45,7 +45,7 @@ const addTaskData = async () => {
                 task_description: task_description.value.trim(),
                 task_status: 'pending',
                 task_due_date: task_due_date.value,
-                task_due_date_updated: new Date().toLocaleDateString("en-GB")
+                task_due_date_updated: new Date().toISOString()
         };
             const res = await axios.post(api_url, new_task);
             tasks.value.push(res.data);
@@ -90,7 +90,7 @@ const updateTaskData = async () => {
                 task_description: task_description.value.trim(),
                 task_status: task_status.value.trim().toLowerCase(),
                 task_due_date: task_due_date.value,
-                task_due_date_updated: new Date().toLocaleDateString("en-GB")
+                task_due_date_updated: new Date().toISOString()
             }
             const res = await axios.put(`${api_url}/${updated_task_id.value}`, update_task);
 
